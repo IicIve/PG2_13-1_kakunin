@@ -20,7 +20,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	Player* player = new Player;
 	Enemy* enemy1 = new Enemy(200.0f,200.0f,4);
 	Enemy* enemy2 = new Enemy(1000.0f,500.0f, -4);
-	Bullet* bullet_ = new Bullet;
 
 	// ウィンドウの×ボタンが押されるまでループ
 	while (Novice::ProcessMessage() == 0) {
@@ -42,10 +41,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		enemy1->Move();
 		enemy2->Move();
 
-		enemy1->distance = sqrtf(powf(enemy1->enemyPosX_ - bullet_->bulletPosX_, 2) + powf(enemy1->enemyPosY_ - bullet_->bulletPosY_, 2));
+		if (Enemy::isAlive) {
+			enemy1->distance = sqrtf(powf(enemy1->enemyPosX_ - player->bullet_->bulletPosX_, 2) + powf(enemy1->enemyPosY_ - player->bullet_->bulletPosY_, 2));
 
-		if (enemy1->distance <= enemy1->radius_ + bullet_->bulletRadius_) {
-			enemy1->isAlive = 0;
+			if (enemy1->distance <= enemy1->radius_ + player->bullet_->bulletRadius_) {
+				enemy1->isAlive = 0;
+			}
 		}
 		
 		if (!Enemy::isAlive) {
@@ -65,8 +66,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		enemy2->Draw();
 
 		player->Draw();
-
-		Novice::ScreenPrintf(20, 40, "distance %d", enemy1->distance);
 
 		///
 		/// ↑描画処理ここまで
