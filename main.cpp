@@ -36,6 +36,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		/// ↓更新処理ここから
 		///
 
+		if (keys[DIK_R]) {
+			enemy1 = new Enemy(200.0f, 200.0f, 4);
+			enemy2 = new Enemy(1000.0f, 500.0f, -4);
+			Enemy::isAlive = 1;
+		}
+
 		player->Update(keys, preKeys);
 
 		enemy1->Move();
